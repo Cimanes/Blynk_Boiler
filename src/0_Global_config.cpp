@@ -5,13 +5,9 @@
 //--------------------------------------------
 
 // ------------ WiFi Credentials ------------
-#if defined(Cespedal) || defined(Barrioscuro)
-  const char ssid[] = "Pepe_Cimanes";
-  const char pass[] = "Cimanes7581" ;
-#elif defined(Toledo)
-  const char ssid[] = "MIWIFI_HtR7" ;
-  const char pass[] = "TdQTDf3H"    ; //
-#endif
+  const char ssid[] = "**********";
+  const char pass[] = "**********"; 
+
 
 //  --------  Control Variables   -----------
 bool sync_time  = 0 ; // time synch done after boot (used with Blynk RTC).
