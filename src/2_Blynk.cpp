@@ -5,27 +5,37 @@
  * The device receives data from the App using BLYNK_WRITE(vPIN).
  */
 
-//--------------------------------------------
+// --------------------------------------------
 //  Libraries
-//--------------------------------------------
+// --------------------------------------------
 #include <ESP8266WiFi.h> 
 #include <BlynkSimpleEsp8266.h>
-// #include <TimeLib.h>
 #include <WidgetRTC.h>
+// #include <TimeLib.h>
 
 #include "0_Global_config.h"
 #include "1_Timers.h"
 
-//--------------------------------------------
+// --------------------------------------------
 //  Variables and constants
-//--------------------------------------------
-const char auth[] = BLYNK_AUTH_TOKEN  ;
-char Time[20] ; // Formatted time (YYYY-MM-DD hh:mm).
-WidgetRTC rtc;
+// --------------------------------------------
+static const char auth[] = BLYNK_AUTH_TOKEN  ;
+static bool sync_time  = 0 ;  // time synch done after boot (used with Blynk RTC).
+char Time[20] ;               // Formatted time (YYYY-MM-DD hh:mm).
+WidgetRTC rtc;                // RTC widget instance
 
-//--------------------------------------------
+// ------------ WiFi Credentials ------------
+#if defined(Cespedal) || defined(Barrioscuro)
+  static const char ssid[] = "Pepe_Cimanes";
+  static const char pass[] = "Cimanes7581" ;
+#elif defined(Toledo)
+  static const char ssid[] = "MIWIFI_HtR7" ;
+  static const char pass[] = "TdQTDf3H"    ;
+#endif
+
+// --------------------------------------------
 //  Virtual pin definitions
-//--------------------------------------------
+// --------------------------------------------
 #if defined(Cespedal) || defined(Toledo)
   #define vpin_run V6     // V6(Cespedal), V18(Bºoscuro) = Boiler power ON / OFF (1 = ON).
   #define vpin_period V8  // V8(Cespedal), V20(Bºoscuro) = Control period (seconds).
@@ -37,9 +47,9 @@ WidgetRTC rtc;
   #define vpin_winter V21  // V9(Cespedal), V21(Bºoscuro) = Summer / Winter operation mode (1 = winter).
 #endif
 
-//--------------------------------------------
+// --------------------------------------------
 //  Receive data from Blynk when these virtual pins change
-//--------------------------------------------
+// --------------------------------------------
 BLYNK_WRITE(vpin_run) {
   boiler = param.asInt()      ;
   #ifdef debug
@@ -77,9 +87,9 @@ BLYNK_WRITE(InternalPinDBG) {     // Internal pin = V255 -> used for special com
 }
 
 
-//--------------------------------------------
+// --------------------------------------------
 //  RTC from blynk
-//--------------------------------------------
+// --------------------------------------------
 void get_Date() {
   // Obtain date and time from Blynk RTC and format it into Time[]
 
@@ -130,15 +140,14 @@ void get_Date() {
 }
 
 
-//--------------------------------------------
+// --------------------------------------------
 //  Send data to Blynk
-//--------------------------------------------
+// --------------------------------------------
 void send_Blynk() {
 // send readings from sensor to Blynk (<10 values per second).
   get_Date()                        ; // Refresh RTC time.
   Blynk.virtualWrite(V10, Time)     ; // V10 = Date and time (from RTC).
   #ifdef debug
-    // Serial.println(Time)             ;
     Serial.print(F("Fbk: Run = "))  ;
     Serial.print(boiler)            ;
     Serial.print(F(" | Period = ")) ;
@@ -149,9 +158,9 @@ void send_Blynk() {
 }
 
 
-//--------------------------------------------
+// --------------------------------------------
 //  Synchronize on Blynk connection
-//--------------------------------------------
+// --------------------------------------------
 BLYNK_CONNECTED() { // Synchronize time and mode on connection.
   Blynk.sendInternal("rtc", "sync") ; 
   Blynk.syncVirtual(vpin_run)       ;
@@ -164,9 +173,9 @@ BLYNK_CONNECTED() { // Synchronize time and mode on connection.
 }
 
 
-//--------------------------------------------
+// --------------------------------------------
 //  Setup
-//--------------------------------------------
+// --------------------------------------------
 void setup_Blynk() {
   Blynk.begin(auth, ssid, pass)                   ; // Connect with Blink Cloud.
   rtc.begin()                                     ; // Start RTC widget
@@ -175,4 +184,8 @@ void setup_Blynk() {
   t_clock = timer.setInterval(Dt_clock, get_Date) ; // "Fast" retrieve time during boot.
 }
 
+
+// --------------------------------------------
+//  Loop
+// --------------------------------------------
 void loop_Blynk() {  Blynk.run(); }

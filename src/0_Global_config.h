@@ -1,8 +1,8 @@
 #pragma once
 
-//--------------------------------------------
+// --------------------------------------------
 //  Options
-//--------------------------------------------
+// --------------------------------------------
 //**** Uncomment to allow serial print debug.
 #define debug
 
@@ -16,18 +16,10 @@
 #define Toledo
 
 
-//--------------------------------------------
+// --------------------------------------------
 //  Global Variables declarations
-//--------------------------------------------
-
-// ------------ WiFi Credentials ------------
-extern const char ssid[];
-extern const char pass[];
-
-//  --------  Control Variables   -----------
-extern bool sync_time ; // time synch done after boot (used with Blynk RTC).
+// --------------------------------------------
+// extern bool sync_time ; // time synch done after boot (used with Blynk RTC).
 extern bool boiler    ; // Select ON / OFF operation (Relay output to disconnect boiler).
-extern bool boiler_old; // Record "previous condition" of ON / OFF operation.
 extern bool winter    ; // Select summer/winter operation (Relay output to change mode).
-extern bool winter_old; // Record "previous condition" of summer/winter operation.
 extern bool refresh_dt; // Detect when period change is required.

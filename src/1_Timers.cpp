@@ -1,19 +1,18 @@
 #include "1_Timers.h"    // Options and globals
 
-//--------------------------------------------
+// --------------------------------------------
 //  Timers (definitions)
-//--------------------------------------------
+// --------------------------------------------
 BlynkTimer timer    ; // Timer object from Blynktimer.
 
 int t_clock   = -1  ; // Timer for date & time refresh from Blynk or NTP.
 int t_LED     = -1  ; // Timer to show change of mode.
 int t_control = -1  ; // Timer for data and thermostat control.
-
 unsigned long Dt_control = 10000UL; // interval (ms) for refresh.
 
-//--------------------------------------------
+// --------------------------------------------
 //  Timer function for loop 
-//--------------------------------------------
+// --------------------------------------------
 void loop_timer() { timer.run()  ; }
 
 

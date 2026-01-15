@@ -12,19 +12,24 @@
 #include "1_Timers.h"
 #include "2_Blynk.h"
 
+// --------------------------------------------
+//  Local Variables
+// --------------------------------------------
+static bool boiler_old = 0 ; // Record "previous condition" of ON / OFF operation.
+static bool winter_old = 0 ; // Record "previous condition" of summer/winter operation.
 
-//--------------------------------------------
+// --------------------------------------------
 //  Function to switch OFF the LED (only for ESP01 with no debug)
-//--------------------------------------------
+// --------------------------------------------
 // Function defined to be used with Timer.
 #ifdef pin_led
     void flash_OFF() { digitalWrite(pin_led, HIGH); }
 #endif
 
 
-//--------------------------------------------
+// --------------------------------------------
 //  Control operation of boiler mode
-//--------------------------------------------
+// --------------------------------------------
 void control() {
   #ifdef debug
     Serial.println(F("Start Control"))  ;
@@ -78,9 +83,9 @@ void control() {
   send_Blynk()                        ;
 }
 
-//--------------------------------------------
+// --------------------------------------------
 //  Setup
-//--------------------------------------------
+// --------------------------------------------
 void setup_control() {
   pinMode(pin_winter, OUTPUT)   ;
   digitalWrite(pin_winter, HIGH); // De-energize "Winter" relay (relay is energized when pin is LOW).
