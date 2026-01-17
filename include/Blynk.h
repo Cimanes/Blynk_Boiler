@@ -5,6 +5,8 @@
  * The device receives data from the App using BLYNK_WRITE(vPIN).
  */
 
+
+
 // --------------------------------------------
 //  BLYNK configuration
 // --------------------------------------------

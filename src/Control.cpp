@@ -1,4 +1,4 @@
-#include "3_Control.h"
+#include "Control.h"
 
 /*
  * Operate two digital outputs to change boiler operation (GPIO0 = On / Off) and boiler mode (GPIO2 = summer / winter).
@@ -9,8 +9,8 @@
 // --------------------------------------------
 //  Libraries
 // --------------------------------------------
-#include "1_Timers.h"
-#include "2_Blynk.h"
+#include "Timers.h"
+#include "Blynk.h"
 
 // --------------------------------------------
 //  Local Variables

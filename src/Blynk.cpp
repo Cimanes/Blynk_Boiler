@@ -1,4 +1,4 @@
-#include "2_Blynk.h"
+#include "Blynk.h"
 
 /*
  * The device sends data to the App using Blynk.virtualWrite(pin, value).
@@ -12,9 +12,8 @@
 #include <BlynkSimpleEsp8266.h>
 #include <WidgetRTC.h>
 // #include <TimeLib.h>
-
-#include "0_Global_config.h"
-#include "1_Timers.h"
+#include "Global_config.h"
+#include "Timers.h"
 
 // --------------------------------------------
 //  Variables and constants

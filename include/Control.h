@@ -9,7 +9,8 @@
 // --------------------------------------------
 //  Libraries
 // --------------------------------------------
-#include "0_Global_Config.h"    // Options and globals
+#include "Global_config.h"    // Options and globals
+
 
 // --------------------------------------------
 //  Pin definitions
